@@ -1,2 +1,4 @@
 AccessKeyId=AKIAIH67RMKX3GW3CM5A1
 SecretKey=x46GgkjNW9hqvktfZXp6sLFsZE97Mb6Y6sBKdp1V1
+
+$ sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
