@@ -1,0 +1,28 @@
+API key = '0jSZHeLLn6bPWOujd8P3NPnbS'
+API secret key = '92aflympG7Jdt7Im2qngu1YsYf55gehTTZ4ogZnQccQH2mLfVH'
+access_token = '1201856149156487169-R8ojNF5VZ4cUsg4PwBZzwjoecDgjec'
+access_token_secret = 'Pck0NsVvt8Z9ga3FRlL8BTzvCYxlzhh1p7mBIztFXHIah'
+
+
+
+API key = 'OFABUnYiwxS9xijmWLn0rPMSv'
+API secret key = 'lR9QhJnVBXqCFgv5Tc79DnFOSDuxcbUsM6UWahC7TYBp4i7GB2'
+Access token = '1267925190358577154-AlxM5Bpk1c1D16jhh0IBnzHYkCyMV9'
+Access token secret = 'JNz2jzMadDIaFwNLcsFeg1xHiEKEJywwxzEUwkYtQKNMc'
+
+
+
+
+API key = '0uvaOOhp4nhKG0jZ3FfVQCQQm'
+API secret key = 'prC0s0jgg5napN3fDxy5FsWy1RdwnmlXxOMcSZsyjJiXQzx8EZ'
+Access token  = '1201856149156487169-JnRacf7i1YBIuZFyRLEAtzTrt8lA6c'
+Access token secret  = 'n81lZj0FrVWCVNZvCXdhpukqEfMIwEPk0LKuMh1FPlaGV'
+
+
+
+
+
+API key = 'Jn5RRC1pSfZpFsCVzsLIxw7G2'
+API secret key = 'o4JtcxvDao91TFGay1Fzp6PaqittE2hDpNuU46HgJzamRAecS0'
+Access token = '1201856149156487169-urznjhO5WVZPUyenHfGUtd7hcmLxRM'
+Access token secret = 'pO52hhrtl3TTHgxoeqslrhOf6vzzeXzfVSS0nKHxWsPiG'

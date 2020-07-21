@@ -1,0 +1,23 @@
+input {
+  twitter {
+      consumer_key => ""
+      consumer_secret => ""
+      oauth_token => ""
+      oauth_token_secret => ""
+      keywords => 
+      full_tweet => true
+  }
+}
+
+filter {}
+
+output {
+  stdout {
+    codec => dots
+  }
+  elasticsearch {
+      hosts => ""
+      index         => ""
+      document_type => ""
+  }
+}
