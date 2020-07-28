@@ -1,0 +1,407 @@
+Regions +AZ AWS: https://aws.amazon.com/fr/about-aws/global-infrastructure/
+Edge Location  (CloudFront) : https://aws.amazon.com/fr/cloudfront/features/?nc1=h_ls
+https://aws.amazon.com/fr/documentation/
+Partie 1: Creation d'un compte AWS gratuit 
+
+-Créer des alertes de facturation
+https://aws.amazon.com/fr/free/
+://docs.aws.amazon.com/fr_fr/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html
+https://docs.aws.amazon.com/fr_fr/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys
+https://aws.amazon.com/fr/free/#software
+https://aws.amazon.com/fr/ec2/
+
+Partie 2 : LABS
+
+LAB1: Creer un espace de stockage Objet avec (Amazon S3)
+-https://aws.amazon.com/fr/getting-started/tutorials/backup-files-to-amazon-s3/
+https://www.qwiklabs.com/focuses/11776?parent=catalog Introduction to Amazon Simple Storage Service (S3)
+
+-Autre manip :
+-Creer un nouveau compartiment
+-Uploader l'image image.jpg dans le compartiment
+-Creer la page web suivante testS
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div.polaroid {
+  width: 350px;
+  box-shadow: 0 4px 8px 0 grey;
+  text-align: center;
+}
+div.container {
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<h2>Cards Image</h2>
+<div class="polaroid">
+  <img src="https://s3-eu-west-1.amazonaws.com/com-rosettahub-default-walid.saad/image.jpg" alt="Norway" style="width:100%">
+  <div class="container">
+    <p>Hardanger, Norway</p>
+  </div>
+</div>
+</body>
+</html>
+
+
+
+LAB2 : Creer une machine virtuelle Linux (Amazon EC2)
+
+-https://aws.amazon.com/fr/getting-started/tutorials/launch-a-virtual-machine/
+Les noms utilisateur appropriés sont comme suit :
+
+Pour Amazon Linux 2 ou l'AMI Amazon Linux, le nom d'utilisateur est ec2-user.
+
+Pour une AMI Centos, le nom d'utilisateur est centos.
+
+Pour une AMI Debian, le nom d'utilisateur est admin ou root.
+
+Pour une AMI Fedora, le nom d'utilisateur est ec2-user ou fedora.
+
+Pour une AMI RHEL, le nom d'utilisateur est ec2-user ou root.
+
+Pour une AMI SUSE, le nom d'utilisateur est ec2-user ou root.
+
+Pour une AMI Ubuntu, le nom utilisateur est ubuntu.
+
+Si ec2-user et root ne fonctionnent pas, renseignez-vous auprès de votre fournisseur AMI.
+
+
+$ chmod.exe 600 /c/Users/walid/Downloads/MyfirtsKey.pem
+$ ssh -i /c/Users/walid/Downloads/MyfirtsKey.pem ubuntu@ec2-176-34-128-40.eu-west-1.compute.amazonaws.com
+
+-Creer un volume EBS pour une instance linux
+
+$ lsblk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0    8G  0 disk
+└─xvda1 202:1    0    8G  0 part /
+xvdf    202:80   0    2G  0 disk
+loop0     7:0    0 87.9M  1 loop /snap/core/5742
+loop1     7:1    0 16.5M  1 loop /snap/amazon-ssm-agent/784
+$ sudo file -s /dev/xvdf
+/dev/xvdf: data
+
+-->Creer le systeme de fichier
+$ sudo mkfs -t ext4 /dev/xvdf
+mke2fs 1.42.13 (17-May-2015)
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 0110556b-71b8-46e0-a5af-d4d48bef0d80
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+-->Creer un point de montage
+$ sudo mkdir /data
+$ sudo mount /dev/xvdf /data/
+-->Tester votre volume
+$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            488M     0  488M   0% /dev
+tmpfs           100M  3.3M   96M   4% /run
+/dev/xvda1      7.7G  4.0G  3.8G  52% /
+tmpfs           496M     0  496M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           496M     0  496M   0% /sys/fs/cgroup
+/dev/loop0       88M   88M     0 100% /snap/core/5742
+/dev/loop1       17M   17M     0 100% /snap/amazon-ssm-agent/784
+tmpfs           100M     0  100M   0% /run/user/1000
+/dev/xvdf       2.0G  3.0M  1.8G   1% /data
+ubuntu@ip-172-31-30-224:/var/www/html/monsite$
+
+
+
+LAB3 : Creer un environnement de developpement Web (MYSQL, Apache, PHP et PHPMyadmin) (Amazon EC2 et Amazon RDS)
+
+3.1-Creer une BD Mysql (Amazon RDS)
+-https://eu-west-1.console.aws.amazon.com/rds/home?region=eu-west-1#databases:
+-https://aws.amazon.com/fr/getting-started/tutorials/create-mysql-db/
+
+3.2-Creer une machine virtuelle linux et installer dedans Apache PHP et PHPMyAdmin (Amazon EC2)
+
+$  sudo apt install apache2 php libapache2-mod-php php-mysql
+$  wget https://files.phpmyadmin.net/phpMyAdmin/4.7.3/phpMyAdmin-4.7.3-all-languages.zip
+$  sudo apt install unzip
+$  unzip phpMyAdmin-4.7.3-all-languages.zip
+$  mv phpMyAdmin-4.7.3-all-languages phpmyadmin
+$  cd phpmyadmin/
+$  mv config.sample.inc.php config.inc.php
+$  vim config.inc.php
+-->Ajouter cette ligne dans config.inc.php
+$cfg['Servers'][$i]['host'] = 'edugroupe-base.cvhoy6ftnkg1.eu-west-1.rds.amazonaws.com';
+$  sudo mv phpmyadmin/ /var/www/html/
+$  sudo systemctl restart apache2
+$  sudo apt-get install php-mbstring
+$  sudo systemctl restart apache2
+-->Essayer d'acceder a phpmyadmin et login avec user/password
+http://ec2-63-32-99-243.eu-west-1.compute.amazonaws.com/phpmyadmin/
+-->Ne pas oublier d'ajouter une regle entrante dans le groupe de securité RDS du votre instance MySQL
+
+-https://aws.amazon.com/fr/getting-started/tutorials/launch-a-wordpress-website/
+
+LAB4 : Creer une machine virtuelle Windows (Amazon EC2)
+
+https://aws.amazon.com/fr/getting-started/tutorials/launch-windows-vm/ 
+https://cdn.devolutions.net/download/Setup.RemoteDesktopManagerFree.5.1.2.0.exe
+
+LAB 5  AWS CLI
+https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html
+https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2.html
+
+$ aws configure
+https://docs.aws.amazon.com/fr_fr/cli/latest/userguide/cli-chap-configure.html
+$ aws ec2 describe-key-pairs --key-name test-edugroupe
+
+aws ec2 run-instances --image-id ami-08660f1c6fb6b01e7 --count 1 --instance-type t2.micro --key-name test-edugroupe
+ssh -i Downloads/test-edugroupe.pem ubuntu@ec2-34-243-23-80.eu-west-1.compute.amazonaws.com
+aws ec2 terminate-instances --instance-ids i-02f2f4efd1218ad23
+
+
+
+
+
+
+
+LAB 4 Advanced AWS Operations
+
+1-Networikng with Virtual Private Cloud (VPC)
+
+https://docs.aws.amazon.com/fr_fr/vpc/latest/userguide/what-is-amazon-vpc.html
+https://www.qwiklabs.com/focuses/12344?parent=catalog ==> Building Your First Amazon Virtual Private Cloud (VPC)
+
+
+2-Monitoring Infrastructure with CloudWatch
+
+https://docs.aws.amazon.com/fr_fr/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
+
+3-Configuration Managment with CloudFormation
+
+https://www.qwiklabs.com/focuses/11046?parent=catalog ==> Creating an Amazon Virtual Private Cloud (VPC) with AWS CloudFormation
+
+
+4-Scalable Deployment Elastic Load Balancing (ELB)
+
+https://docs.aws.amazon.com/fr_fr/elasticloadbalancing/latest/classic/introduction.html
+https://www.qwiklabs.com/focuses/8712?parent=catalog ==> Working with Elastic Load Balancing
+
+5-Auto Scaling
+
+https://docs.aws.amazon.com/fr_fr/autoscaling/ec2/userguide/as-scale-based-on-demand.html
+https://www.qwiklabs.com/focuses/10450?parent=catalog ==> Maintaining High Availability with Auto Scaling
+
+
+
+
+LAB 5 Infrastructure as Code avec Packer (AMI Image Builder)
+
+1- Introduction 
+
+Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration. Packer is lightweight, runs on every major operating system, and is highly performant, creating machine images for multiple platforms in parallel. Packer does not replace configuration management like Chef or Puppet. In fact, when building images, Packer is able to use tools like Chef or Puppet to install software onto the image.
+
+A machine image is a single static unit that contains a pre-configured operating system and installed software which is used to quickly create new running machines. Machine image formats change for each platform. Some examples include AMIs for EC2, VMDK/VMX files for VMware, OVF exports for VirtualBox, etc.
+
+https://www.packer.io/intro/index.html
+
+In this lab, we're going to take a look at the first IaC tool in this tutorial called Packer and see how it can help us improve our operations.
+
+2-Install Packer
+
+-Create packer-lab directory
+
+$ mkdir packer-lab
+
+-Download and install Packer onto your system :
+https://www.packer.io/downloads.html
+
+Check the version to verify that it was installed:
+
+$ $ ./packer --version
+1.4.0
+
+3-Working with Packer
+
+The way Packer works is simple. It starts a VM with specified characteristics, configures the operating system and installs the software you specify, and then it creates a machine image from that VM.
+
+Packer configuration templates are written in JSON format.
+
+A template has the following three main parts.
+
+-Variables – Where you define custom variables.
+
+-Builders – Where you mention all the required AMI parameters.
+
+-Provisioners – Where you can integrate a shell script, ansible play or a chef cookbook for configuring a required application in the AMI.
+
+We start by define image builder
+
+3.1-Define image builder
+
+-Create a aws-ubuntu-image.json file inside the packer-lab directory with the following content (make sure to put the correct informations about
+ your AWS account):
+
+$ cat aws-ubuntu-image.json
+{
+  "variables": {
+    "aws_access_key": "A+",
+    "aws_secret_key": "c+"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "eu-west-1",
+    "source_ami": "ami-08660f1c6fb6b01e7",
+    "instance_type": "t2.micro",
+    "ami_name": "my-packer-demo {{timestamp}}",
+    "ssh_username": "ubuntu"
+  }]
+}
+
+
+-Validate the template:
+
+$ ./packer validate aws-ubuntu-image.json
+Template validated successfully.
+
+
+3.2-Define Provisioner
+
+-Create a script file named install-apache.sh and copy the following contents on to it.
+
+$ cat install-apache.sh
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y apache2
+
+The above script just updates the repository and installs apache2 server.
+
+-Add a SHELL provisioner to your JSON fie
+
+$ cat aws-ubuntu-image.json
+{
+  "variables": {
+    "aws_access_key": "A+",
+    "aws_secret_key": "c+"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "eu-west-1",
+    "source_ami": "ami-08660f1c6fb6b01e7",
+    "instance_type": "t2.micro",
+    "ami_name": "my-packer-demo {{timestamp}}",
+    "ssh_username": "ubuntu"
+  }],
+
+  "provisioners": [
+  {
+    "type": "shell",
+    "script": "install-apache.sh"
+  }
+  ]
+} 
+
+-Validate the template:
+
+$ ./packer validate aws-ubuntu-image.json
+Template validated successfully.
+
+
+3.3-Create custom machine image
+
+To build a packer template, you just need to execute the build command with the JSON template :
+
+$ ./packer build aws-ubuntu-image.json
+
+amazon-ebs output will be in this color.
+
+==> amazon-ebs: Prevalidating AMI Name: my-packer-demo 1555179669
+    amazon-ebs: Found Image ID: ami-08660f1c6fb6b01e7
+==> amazon-ebs: Creating temporary keypair: packer_5cb22895-1aa4-2a66-9f3b-60a2ea5f4902
+==> amazon-ebs: Creating temporary security group for this instance: packer_5cb22898-11e7-3877-d126-4c7e67142be2
+==> amazon-ebs: Authorizing access to port 22 from [0.0.0.0/0] in the temporary security groups...
+==> amazon-ebs: Launching a source AWS instance...
+==> amazon-ebs: Adding tags to source instance
+    amazon-ebs: Adding tag: "Name": "Packer Builder"
+    amazon-ebs: Instance ID: i-0b04f2f243b695871
+==> amazon-ebs: Waiting for instance (i-0b04f2f243b695871) to become ready...
+==> amazon-ebs: Using ssh communicator to connect: 34.244.237.13
+==> amazon-ebs: Waiting for SSH to become available...
+==> amazon-ebs: Connected to SSH!
+==> amazon-ebs: Provisioning with shell script: install-apache.sh
+    amazon-ebs: Hit:1 http://archive.ubuntu.com/ubuntu xenial InRelease
+    amazon-ebs: Get:2 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+    amazon-ebs: Get:3 http://archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+    amazon-ebs: Get:4 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+    amazon-ebs: Get:5 http://archive.ubuntu.com/ubuntu xenial/universe amd64 Packages [7532 kB]
+    ...............................................
+    ...............................................
+    ...............................................
+    amazon-ebs: Fetched 16.4 MB in 6s (2351 kB/s)
+    amazon-ebs: Reading package lists...
+    amazon-ebs: Reading package lists...
+    amazon-ebs: Building dependency tree...
+    amazon-ebs: Reading state information...
+    amazon-ebs: The following additional packages will be installed:
+    amazon-ebs:   apache2-bin apache2-data apache2-utils libapr1 libaprutil1
+    amazon-ebs:   libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.1-0 ssl-cert
+    amazon-ebs: Suggested packages:
+    amazon-ebs:   www-browser apache2-doc apache2-suexec-pristine | apache2-suexec-custom
+    amazon-ebs:   openssl-blacklist
+    amazon-ebs: The following NEW packages will be installed:
+    amazon-ebs:   apache2 apache2-bin apache2-data apache2-utils libapr1 libaprutil1
+    amazon-ebs:   libaprutil1-dbd-sqlite3 libaprutil1-ldap liblua5.1-0 ssl-cert
+    amazon-ebs: 0 upgraded, 10 newly installed, 0 to remove and 59 not upgraded.
+    amazon-ebs: Need to get 1,558 kB of archives.
+    ...............................................
+    ...............................................
+    ...............................................
+    amazon-ebs: Processing triggers for ureadahead (0.100.0-19) ...
+    amazon-ebs: Processing triggers for ufw (0.35-0ubuntu2) ...
+==> amazon-ebs: Stopping the source instance...
+    amazon-ebs: Stopping instance
+==> amazon-ebs: Waiting for the instance to stop...
+==> amazon-ebs: Creating AMI my-packer-demo 1555179669 from instance i-0b04f2f243b695871
+    amazon-ebs: AMI: ami-0dfa0238960036eb3
+==> amazon-ebs: Waiting for AMI to become ready...
+==> amazon-ebs: Terminating the source AWS instance...
+==> amazon-ebs: Cleaning up any extra volumes...
+==> amazon-ebs: No volumes to clean up, skipping
+==> amazon-ebs: Deleting temporary security group...
+==> amazon-ebs: Deleting temporary keypair...
+Build 'amazon-ebs' finished.
+
+==> Builds finished. The artifacts of successful builds are:
+--> amazon-ebs: AMIs were created:
+eu-west-1: ami-0dfa0238960036eb3
+
+-Check Your your AWS Web Console (Services/EC2/Instances, Services/EC2/Images/AMIs
+
+3.4-Launch an EC2 Instance with your custom built machine image
+-Using AWS Web Console
+-Using CLI
+$ aws configure
+https://docs.aws.amazon.com/fr_fr/cli/latest/userguide/cli-chap-configure.html
+
+$ aws ec2 run-instances --image-id ami-0dfa0238960036eb3 --count 1 --instance-type t2.micro --key-name Your-Key
+$ ssh -i Downloads/test-edugroupe.pem ubuntu@ec2-34-243-23-80.eu-west-1.compute.amazonaws.com
+
+3.5-Try to acces to your instance and check the Apache2 Server status
+http://ec2-52-18-33-95.eu-west-1.compute.amazonaws.com/
+
+3.6-Terminate your instance
+$ aws ec2 terminate-instances --instance-ids i-02f2f4efd1218ad23
+
+The advantages of using Packer usage are quite obvious:
+-It needs less time and effort to configure a new Cloud Image
+-System configuration becomes more reliable. When we start a new Instance, we know for sure that it has 
+the right packages installed and configured properly, since we built and tested the image.
+
