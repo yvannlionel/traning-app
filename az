@@ -11,3 +11,22 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker
 https://download.d-l.fr/apache_listing/OS/windows/win10/
  aws ec2 describe-key-pairs
  aws ec2 run-instances --image-id ami-08660f1c6fb6b01e7 --count 1 --instance-type t2.micro --key-name integcontinue  i-0ef9d23dbee74fc9d
+
+https://github.com/walidsaad/rancheros-vagrantvbox-packer
+
+{
+  "variables": {
+    "aws_access_key": "A+",
+    "aws_secret_key": "c+"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "eu-west-1",
+    "source_ami": "ami-08660f1c6fb6b01e7",
+    "instance_type": "t2.micro",
+    "ami_name": "my-packer-demo {{timestamp}}",
+    "ssh_username": "ubuntu"
+  }]
+}
