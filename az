@@ -23,8 +23,8 @@ https://github.com/walidsaad/rancheros-vagrantvbox-packer
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
-    "region": "eu-west-1",
-    "source_ami": "ami-08660f1c6fb6b01e7",
+    "region": "us-east-2",
+    "source_ami": "ami-04781752c9b20ea41",
     "instance_type": "t2.micro",
     "ami_name": "my-packer-demo {{timestamp}}",
     "ssh_username": "ubuntu"
